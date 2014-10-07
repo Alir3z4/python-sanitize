@@ -38,30 +38,91 @@
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <p><code>sanitize</code> is a Python module for making sure various things (e.g. HTML) are safe to use. It was originally written by Mark Pilgrim and is distributed under the BSD license.</p>
+        <h1>
+<a name="sanitize" class="anchor" href="#sanitize"><span class="octicon octicon-link"></span></a>Sanitize</h1>
 
-<p>Usage:</p>
+<p><a href="http://travis-ci.org/Alir3z4/python-sanitize"><img src="https://secure.travis-ci.org/Alir3z4/python-sanitize.png" alt="Build Status"></a>
+<a href="https://coveralls.io/r/Alir3z4/python-sanitize"><img src="https://coveralls.io/repos/Alir3z4/python-sanitize/badge.png" alt="Coverage Status"></a>
+<a href="https://pypi.python.org/pypi/sanitize/"><img src="https://pypip.in/d/sanitize/badge.png" alt="Downloads"></a>
+<a href="https://pypi.python.org/pypi/sanitize/"><img src="https://pypip.in/v/sanitize/badge.png" alt="Version"></a>
+<a href="https://pypi.python.org/pypi/sanitize/"><img src="https://pypip.in/egg/sanitize/badge.png" alt="Egg?"></a>
+<a href="https://pypi.python.org/pypi/sanitize/"><img src="https://pypip.in/wheel/sanitize/badge.png" alt="Wheel?"></a>
+<a href="https://pypi.python.org/pypi/sanitize/"><img src="https://pypip.in/format/sanitize/badge.png" alt="Format"></a>
+<a href="https://pypi.python.org/pypi/sanitize/"><img src="https://pypip.in/license/sanitize/badge.png" alt="License"></a></p>
 
-<pre><code>&gt;&gt;&gt; import sanitize
-&gt;&gt;&gt; sanitize.HTML('safe&lt;meta http-equiv="Refresh" content="0; URL=/"&gt;')
-'safe'
+<p><code>sanitize</code> is a Python module for making sure various things (e.g. HTML) are safe to use. 
+It was originally written by Mark Pilgrim and is distributed under the BSD license.</p>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<pre><code>&gt;&gt;&gt; from sanitize import HTML
+&gt;&gt;&gt; HTML('&lt;b&gt;hello')
+'&lt;b&gt;hello&lt;/b&gt;'
+&gt;&gt;&gt; HTML('&lt;img&gt;')
+'&lt;img /&gt;'
+&gt;&gt;&gt; HTML(("&lt;b&gt;&lt;b&gt;&lt;b&gt;hello")
+... )
+'&lt;b&gt;&lt;b&gt;&lt;b&gt;hello&lt;/b&gt;&lt;/b&gt;&lt;/b&gt;'
+&gt;&gt;&gt; HTML('&lt;img src="foo"/')
+''
+&gt;&gt;&gt; HTML('&lt;input type="checkbox" checked&gt;')
+'&lt;input type="checkbox" checked="checked" /&gt;'
+&gt;&gt;&gt; # dangerous tags (a small sample)
+... 
+&gt;&gt;&gt; HTML('safe&lt;applet code="foo.class" codebase="http://example.com/"&gt;&lt;/applet&gt; &lt;b&gt;description&lt;/b&gt;')
+'safe &lt;b&gt;description&lt;/b&gt;'
+&gt;&gt;&gt; HTML('safe&lt;frameset rows="*"&gt;&lt;frame src="http://example.com/"&gt;&lt;/frameset&gt; &lt;b&gt;description&lt;/b&gt;')
+'safe &lt;b&gt;description&lt;/b&gt;'
+&gt;&gt;&gt; # bad protocols (a small sample)
+&gt;&gt;&gt; HTML('&lt;a href="java' + chr(1) + 'script:foo"&gt;bar&lt;/a&gt;')
+'&lt;a href="#foo"&gt;bar&lt;/a&gt;'
+&gt;&gt;&gt; HTML('&lt;a href="vbscript:foo"&gt;bar&lt;/a&gt;')
+'&lt;a href="#foo"&gt;bar&lt;/a&gt;'
+&gt;&gt;&gt; 
 </code></pre>
 
-<h2>
-<a name="how-to-do-a-release" class="anchor" href="#how-to-do-a-release"><span class="octicon octicon-link"></span></a>How to do a release</h2>
+<p>To see more usage examples see <code>tests/test_sanitize_html.py</code>.</p>
 
-<ol>
-<li>Update the version in <code>sanitize.py</code>
-</li>
-<li>Update the version in <code>setup.py</code>
-</li>
-<li>Run the test cases: <code>python sanitize_test.py</code>
-</li>
-<li>Run <code>python setup.py sdist upload</code>
-</li>
-<li><code>git commit -am "released version XX"</code></li>
-<li><code>git push</code></li>
-</ol>
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p><code>python-sanitize</code> is available on pypi</p>
+
+<p><a href="http://pypi.python.org/pypi/python-sanitize">http://pypi.python.org/pypi/python-sanitize</a></p>
+
+<p>So easily install it by <code>pip</code>:</p>
+
+<pre><code>pip install sanitize
+</code></pre>
+
+<p>Or by <code>easy_install</code>:</p>
+
+<pre><code>$ easy_install sanitize
+</code></pre>
+
+<p>Another way is by cloning <code>python-sanitize</code>'s git repository</p>
+
+<pre><code>$ git clone git://github.com/Alir3z4/python-sanitize.git
+</code></pre>
+
+<p>Then install it by running</p>
+
+<pre><code>$ python setup.py install
+</code></pre>
+
+<h1>
+<a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h1>
+
+<p>To run unit tests:</p>
+
+<pre><code>$ python setup.py test
+</code></pre>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p><code>Sanitize</code> is distributed under BSD license.</p>
       </section>
 
     </div>
